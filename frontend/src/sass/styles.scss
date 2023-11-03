@@ -9,3 +9,74 @@ body {
   background-color: $bg-dark;
   color: $text-color;
 }
+
+a {
+  color: $text-color;
+  text-decoration: none;
+}
+.active {
+  font-weight: bold;
+}
+ul {
+  list-style: none;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  span {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: $text-span;
+    font-size: 0.7em;
+  }
+}
+input {
+  background-color: $text-input;
+  color: $text-span;
+  border: 1px solid $border;
+  border-radius: 2px;
+  padding: 10px 8px;
+  outline: none;
+  margin: 0 0 0.6em;
+  &::placeholder {
+    color: $text-span;
+  }
+}
+
+.btn,
+button,
+input[type="submit"] {
+  background-color: #0094f6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 8px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0.8;
+  font-size: 1em;
+}
+
+input[type="submit"] {
+  margin-top: 1em;
+}
+input:disabled {
+  cursor: not-allowed;
+  background-color: #000;
+}
+input:hover,
+input[type="submit"]:hover {
+  opacity: 1;
+}
+.cancel-btn {
+  background-color: #ccc;
+}
+.hide {
+  display: none;
+}
