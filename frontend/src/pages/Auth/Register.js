@@ -2,25 +2,42 @@ import "./Auth.scss";
 
 //components
 import { Link } from "react-router-dom";
+import Message from "../../components/Message";
 
 //hooks
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+//redux
+import { register, reset } from "../../slices/authSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPasword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     const user = {
       name,
       email,
       password,
-      confirmPasword,
+      confirmPassword,
     };
-    console.log(user);
+
+    dispatch(register(user));
+    console.log(error);
   };
+
+  // Clean all auth states
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <div id="register">
@@ -49,9 +66,11 @@ const Register = () => {
           type="password"
           placeholder="Confirme sua senha"
           onChange={(e) => setConfirmPassword(e.target.value)}
-          value={confirmPasword || ""}
+          value={confirmPassword || ""}
         />
-        <input type="submit" value="Cadastrar" />
+        {!loading && <input type="submit" value="Cadastrar" />}
+        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {error && <Message msg={error} type="error" />}
       </form>
       <p>
         Já possui conta? <Link to={"/login"}>Clique aqui.</Link>
