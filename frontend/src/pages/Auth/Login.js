@@ -18,23 +18,23 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, apiConnection } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!apiConnection) {
-      setErrorApi(
-        "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
-      );
-      return;
-    }
-
     const user = {
       email,
       password,
     };
 
     dispatch(login(user));
+    // if (apiConnection) {
+    // } else {
+    //   setErrorApi(
+    //     "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
+    //   );
+    //   return;
+    // }
   };
 
   //clean all auth states
@@ -43,9 +43,9 @@ const Login = () => {
   }, [dispatch]);
 
   // Dispatch the action to check API connection
-  useEffect(() => {
-    dispatch(checkApiConnection());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(checkApiConnection());
+  // }, [dispatch]);
 
   return (
     <div id="login">
@@ -67,7 +67,7 @@ const Login = () => {
         {!loading && <input type="submit" value="Entrar" />}
         {loading && <input type="submit" value="Aguarde..." disabled />}
         {error && <Message msg={error} type="error" />}
-        {errorApi && <Message msg={errorApi} type="error" />}
+        {/* {errorApi && <Message msg={errorApi} type="error" />} */}
       </form>
       <p>
         Não tem uma conta? <Link to={"/register"}>Clique aqui.</Link>

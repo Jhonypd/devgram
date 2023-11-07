@@ -15,6 +15,7 @@ import Home from "./pages/Home/home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Loading from "./pages/loading/Loading";
+import EditProfile from "./pages/editProfile/EditProfile";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -32,6 +33,10 @@ function App() {
             <Route
               path="/"
               element={auth ? <Home /> : <Navigate to={"/login"} />}
+            />
+            <Route
+              path="/profile"
+              element={auth ? <EditProfile /> : <Navigate to={"/login"} />}
             />
             <Route
               path="/login"

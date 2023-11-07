@@ -20,17 +20,17 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, apiConnection } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!apiConnection) {
-      setErrorApi(
-        "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
-      );
-      return;
-    }
+    // if (!apiConnection) {
+    //   setErrorApi(
+    //     "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
+    //   );
+    //   return;
+    // }
 
     const user = {
       name,
@@ -40,7 +40,6 @@ const Register = () => {
     };
 
     dispatch(register(user));
-    console.log(error);
   };
 
   // Clean all auth states
@@ -49,9 +48,9 @@ const Register = () => {
   }, [dispatch]);
 
   // Dispatch the action to check API connection
-  useEffect(() => {
-    dispatch(checkApiConnection());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(checkApiConnection());
+  // }, [dispatch]);
 
   return (
     <div id="register">
@@ -85,7 +84,7 @@ const Register = () => {
         {!loading && <input type="submit" value="Cadastrar" />}
         {loading && <input type="submit" value="Aguarde..." disabled />}
         {error && <Message msg={error} type="error" />}
-        {errorApi && <Message msg={errorApi} type="error" />}
+        {/* {errorApi && <Message msg={errorApi} type="error" />} */}
       </form>
       <p>
         Já possui conta? <Link to={"/login"}>Clique aqui.</Link>

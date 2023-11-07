@@ -10,7 +10,7 @@ import {
 } from "react-icons/bs";
 
 //hooks
-import { useState } from "react";
+//import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(logout());
+    dispatch(reset());
 
     navigate("/login");
   };

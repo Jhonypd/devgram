@@ -1,18 +1,19 @@
 import { api, requestConfig } from "../utils/config";
 
-const checkApiConnection = async () => {
-  try {
-    const res = await fetch(api + "/health-check");
-    if (res.status === 200) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-};
+// const checkApiConnection = async () => {
+//   try {
+//     const res = await fetch(api + "/healthcheck");
+//     console.log(res);
+//     if (res.status === 200) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return false;
+//   }
+// };
 
 //register an user
 const register = async (data) => {
@@ -62,7 +63,6 @@ const authService = {
   register,
   logout,
   login,
-  checkApiConnection,
 };
 
 export default authService;
