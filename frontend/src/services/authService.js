@@ -1,7 +1,20 @@
 import { api, requestConfig } from "../utils/config";
 
-//register an user
+const checkApiConnection = async () => {
+  try {
+    const res = await fetch(api + "/health-check");
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
+//register an user
 const register = async (data) => {
   const config = requestConfig("POST", data);
 
@@ -49,6 +62,7 @@ const authService = {
   register,
   logout,
   login,
+  checkApiConnection,
 };
 
 export default authService;

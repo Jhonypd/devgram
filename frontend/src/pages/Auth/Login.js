@@ -9,18 +9,25 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //Redux
-import { login, reset } from "../../slices/authSlice";
+import { login, reset, checkApiConnection } from "../../slices/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorApi, setErrorApi] = useState("");
 
   const dispatch = useDispatch();
 
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, apiConnection } = useSelector((state) => state.auth);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!apiConnection) {
+      setErrorApi(
+        "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
+      );
+      return;
+    }
 
     const user = {
       email,
@@ -33,6 +40,11 @@ const Login = () => {
   //clean all auth states
   useEffect(() => {
     dispatch(reset());
+  }, [dispatch]);
+
+  // Dispatch the action to check API connection
+  useEffect(() => {
+    dispatch(checkApiConnection());
   }, [dispatch]);
 
   return (
@@ -55,6 +67,7 @@ const Login = () => {
         {!loading && <input type="submit" value="Entrar" />}
         {loading && <input type="submit" value="Aguarde..." disabled />}
         {error && <Message msg={error} type="error" />}
+        {errorApi && <Message msg={errorApi} type="error" />}
       </form>
       <p>
         Não tem uma conta? <Link to={"/register"}>Clique aqui.</Link>

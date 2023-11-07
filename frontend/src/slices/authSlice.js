@@ -8,7 +8,17 @@ const initialState = {
   error: false,
   success: false,
   loading: false,
+  apiConnection: false,
 };
+
+export const checkApiConnection = createAsyncThunk(
+  "auth/checkApiConnection",
+  async (_, thunkAPI) => {
+    const isConected = await authService.checkApiConnection();
+
+    return isConected;
+  }
+);
 
 // Register an user and sign in
 export const register = createAsyncThunk(
@@ -57,6 +67,9 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(checkApiConnection.fulfilled, (state, action) => {
+        state.apiConnection = action.payload;
+      })
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
