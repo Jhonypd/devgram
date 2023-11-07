@@ -9,12 +9,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //Redux
-import { login, reset, checkApiConnection } from "../../slices/authSlice";
+import { login, reset } from "../../slices/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorApi, setErrorApi] = useState("");
 
   const dispatch = useDispatch();
 
@@ -28,24 +27,12 @@ const Login = () => {
     };
 
     dispatch(login(user));
-    // if (apiConnection) {
-    // } else {
-    //   setErrorApi(
-    //     "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
-    //   );
-    //   return;
-    // }
   };
 
   //clean all auth states
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
-
-  // Dispatch the action to check API connection
-  // useEffect(() => {
-  //   dispatch(checkApiConnection());
-  // }, [dispatch]);
 
   return (
     <div id="login">

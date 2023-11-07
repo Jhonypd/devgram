@@ -9,14 +9,13 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //redux
-import { register, reset, checkApiConnection } from "../../slices/authSlice";
+import { register, reset } from "../../slices/authSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorApi, setErrorApi] = useState("");
 
   const dispatch = useDispatch();
 
@@ -24,13 +23,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // if (!apiConnection) {
-    //   setErrorApi(
-    //     "Erro: Falha ao tentar se conectar ao servidor. Tente novamente mais tarde."
-    //   );
-    //   return;
-    // }
 
     const user = {
       name,
@@ -46,11 +38,6 @@ const Register = () => {
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
-
-  // Dispatch the action to check API connection
-  // useEffect(() => {
-  //   dispatch(checkApiConnection());
-  // }, [dispatch]);
 
   return (
     <div id="register">
