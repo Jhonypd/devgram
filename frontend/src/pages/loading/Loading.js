@@ -3,7 +3,13 @@ import "./Loading.scss";
 const Loading = () => {
   return (
     <div className="loading">
-      <span className="loader"></span>
+      <div className="loading-sound-wave">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   );
 };
