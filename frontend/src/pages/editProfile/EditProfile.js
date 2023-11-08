@@ -38,8 +38,6 @@ const EditProfile = () => {
     }
   }, [user]);
 
-  console.log(user);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,8 +45,6 @@ const EditProfile = () => {
     const userData = {
       name,
     };
-
-    console.log("userData:", userData);
 
     if (profileImage) {
       userData.profileImage = profileImage;
@@ -62,27 +58,16 @@ const EditProfile = () => {
       userData.password = password;
     }
 
-    console.log("userData (after conditional checks):", userData);
-
     //build from data
     const formData = new FormData();
 
-    console.log("Keys of userData:", Object.keys(userData));
-
-    // const userFormData = Object.keys(userData).forEach((key) =>
-    //   formData.append(key, userData[key])
-    // );
     for (const key in userData) {
       if (userData.hasOwnProperty(key)) {
         formData.append(key, userData[key]);
       }
     }
 
-    console.log("userFormData:", formData);
-
     await dispatch(updateProfile(formData));
-
-    console.log("formData:", formData);
 
     setTimeout(() => {
       dispatch(resetMessage());
