@@ -8,7 +8,7 @@ import { Link, useParams } from "react-router-dom";
 import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
 
 //pages
-import Loading from "../Loading/Loading";
+import Loading from "../../components/Loading";
 
 //hooks
 import { useEffect, useRef, useState } from "react";

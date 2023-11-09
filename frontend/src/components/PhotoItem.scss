@@ -1,0 +1,29 @@
+.photo-item {
+  .pefil-photo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 0.5em;
+
+    img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+
+    .photo-author a {
+      font-weight: bold;
+    }
+  }
+  img {
+    width: 100%;
+  }
+}
+#home {
+  .photo-item {
+    h2 {
+      margin-bottom: 0.2em;
+    }
+  }
+}
