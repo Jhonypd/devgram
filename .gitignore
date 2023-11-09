@@ -1,4 +1,6 @@
 **/.env
+**/**.jpg
+**/**.jpeg
 
 # dependencies
 **/node_modules

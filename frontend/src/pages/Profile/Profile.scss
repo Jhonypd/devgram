@@ -1,6 +1,21 @@
 #profile {
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
+
+  .nav-form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .new-post-btn {
+    display: flex;
+    justify-content: center;
+    margin: 2em auto;
+
+    button {
+      width: 40%;
+    }
+  }
 
   .profile-header {
     display: flex;
