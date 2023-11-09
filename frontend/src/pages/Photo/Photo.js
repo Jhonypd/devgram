@@ -14,7 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 //redux
-import { getPhoto } from "../../slices/photoSlice";
+import { getPhoto, like } from "../../slices/photoSlice";
+import LikeContainer from "../../components/LikeContainer";
 
 const Photo = () => {
   const { id } = useParams();
@@ -22,7 +23,6 @@ const Photo = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { user: userProfile } = useSelector((state) => state.user);
   const { photo, loading, error, message } = useSelector(
     (state) => state.photo
   );
@@ -35,6 +35,9 @@ const Photo = () => {
   }, [dispatch, id]);
 
   //likes
+  const handleLike = () => {
+    dispatch(like(photo._id));
+  };
 
   if (loading) {
     return <Loading />;
@@ -42,6 +45,11 @@ const Photo = () => {
   return (
     <div id="photo">
       <PhotoItem photo={photo} />
+      <LikeContainer photo={photo} user={user} handleLike={handleLike} />
+      <div className="message-container">
+        {error && <Message msg={error} type={"error"} />}
+        {message && <Message msg={message} type={"success"} />}
+      </div>
     </div>
   );
 };
