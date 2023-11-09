@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 //redux
-import { getPhoto, like } from "../../slices/photoSlice";
+import { deslike, getPhoto, like } from "../../slices/photoSlice";
 import LikeContainer from "../../components/LikeContainer";
 
 const Photo = () => {
@@ -38,6 +38,9 @@ const Photo = () => {
   const handleLike = () => {
     dispatch(like(photo._id));
   };
+  const handleDeslike = () => {
+    dispatch(deslike(photo._id));
+  };
 
   if (loading) {
     return <Loading />;
@@ -45,7 +48,12 @@ const Photo = () => {
   return (
     <div id="photo">
       <PhotoItem photo={photo} />
-      <LikeContainer photo={photo} user={user} handleLike={handleLike} />
+      <LikeContainer
+        photo={photo}
+        user={user}
+        handleDeslike={handleDeslike}
+        handleLike={handleLike}
+      />
       <div className="message-container">
         {error && <Message msg={error} type={"error"} />}
         {message && <Message msg={message} type={"success"} />}

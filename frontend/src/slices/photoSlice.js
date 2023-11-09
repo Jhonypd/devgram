@@ -103,6 +103,23 @@ export const like = createAsyncThunk("photo/like", async (id, thunkAPI) => {
   return data;
 });
 
+// remove like in photo
+export const deslike = createAsyncThunk(
+  "photo/deslike",
+  async (id, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.deslike(id, token);
+
+    // check for erros
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
 export const photoSlice = createSlice({
   name: "photo",
   initialState,
@@ -203,7 +220,7 @@ export const photoSlice = createSlice({
         }
 
         state.photos.map((photo) => {
-          if (photo._id === action.payload.photo.photoId) {
+          if (photo._id === action.payload.photoId) {
             return photo.likes.push(action.payload.userId);
           }
           return photo;
@@ -212,6 +229,33 @@ export const photoSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(like.rejected, (state, action) => {
+        console.log(state, action);
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deslike.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+
+        if (state.photo && state.photo.likes) {
+          state.photo.likes = state.photo.likes.filter(
+            (userId) => userId !== action.payload.userId
+          );
+        }
+
+        state.photos = state.photos.map((photo) => {
+          if (photo._id === action.payload.photoId && photo.likes) {
+            photo.likes = photo.likes.filter(
+              (userId) => userId !== action.payload.userId
+            );
+          }
+          return photo;
+        });
+
+        state.message = action.payload.message;
+      })
+      .addCase(deslike.rejected, (state, action) => {
         console.log(state, action);
         state.loading = false;
         state.error = action.payload;

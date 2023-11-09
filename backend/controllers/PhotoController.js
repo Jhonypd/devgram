@@ -66,7 +66,7 @@ const deletePhoto = async (req, res) => {
 };
 
 //Get all photos
-const getAllPhotos = async (re, res) => {
+const getAllPhotos = async (req, res) => {
   const photos = await Photo.find({})
     .sort([["createdAt", -1]])
     .exec();
@@ -148,19 +148,48 @@ const likePhoto = async (req, res) => {
   }
 
   //check if user already liked the photo
-  if (photo.likes.includes(reqUser._id)) {
-    res.status(422).json({ errors: ["Você já curtiu a foto."] });
-    return;
-  }
+  // if (photo.likes.includes(reqUser._id)) {
+  //   res.status(422).json({ errors: ["Você já curtiu a foto."] });
+  //   return;
+  // }
 
   //Put user id in linkes array
   photo.likes.push(reqUser._id);
 
-  photo.save();
+  await photo.save();
 
   res
     .status(200)
-    .json({ photo: id, userId: reqUser, message: "A foto foi curtida." });
+    .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida." });
+};
+
+// remove like in photo
+const deslikePhoto = async (req, res) => {
+  const { id } = req.params;
+
+  const reqUser = req.user;
+
+  try {
+    const photo = await Photo.findById(id);
+
+    //check if photo exists
+    if (!photo) {
+      res.status(404).json({ errors: ["Foto não encontrada!"] });
+      return;
+    }
+
+    photo.likes = photo.likes.filter((userId) => userId !== reqUser._id);
+
+    await photo.save();
+
+    res.status(200).json({
+      photoId: id,
+      userId: reqUser._id,
+      messages: "Curtida removida!",
+    });
+  } catch (error) {
+    res.status(500).json({ errors: ["Erro interno do servidor."] });
+  }
 };
 
 //comment functionality
@@ -219,6 +248,7 @@ module.exports = {
   getPhotoById,
   updatePhoto,
   likePhoto,
+  deslikePhoto,
   commentPhoto,
   searchPhotos,
 };
