@@ -133,6 +133,37 @@ const updatePhoto = async (req, res) => {
   res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
 };
 
+// remove like in photo
+const dislikePhoto = async (req, res) => {
+  const { id } = req.params;
+
+  const reqUser = req.user;
+
+  try {
+    const photo = await Photo.findById(id);
+
+    //check if photo exists
+    if (!photo) {
+      res.status(404).json({ errors: ["Foto não encontrada!"] });
+      return;
+    }
+
+    photo.likes = photo.likes.filter(
+      (userId) => userId.toString() !== reqUser._id.toString()
+    );
+
+    await photo.save();
+
+    res.status(200).json({
+      photoId: id,
+      userId: reqUser._id,
+      messages: "Curtida removida!",
+    });
+  } catch (error) {
+    res.status(500).json({ errors: ["Erro interno do servidor."] });
+  }
+};
+
 //Like funcionality
 const likePhoto = async (req, res) => {
   const { id } = req.params;
@@ -147,12 +178,6 @@ const likePhoto = async (req, res) => {
     return;
   }
 
-  //check if user already liked the photo
-  // if (photo.likes.includes(reqUser._id)) {
-  //   res.status(422).json({ errors: ["Você já curtiu a foto."] });
-  //   return;
-  // }
-
   //Put user id in linkes array
   photo.likes.push(reqUser._id);
 
@@ -161,35 +186,6 @@ const likePhoto = async (req, res) => {
   res
     .status(200)
     .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida." });
-};
-
-// remove like in photo
-const deslikePhoto = async (req, res) => {
-  const { id } = req.params;
-
-  const reqUser = req.user;
-
-  try {
-    const photo = await Photo.findById(id);
-
-    //check if photo exists
-    if (!photo) {
-      res.status(404).json({ errors: ["Foto não encontrada!"] });
-      return;
-    }
-
-    photo.likes = photo.likes.filter((userId) => userId !== reqUser._id);
-
-    await photo.save();
-
-    res.status(200).json({
-      photoId: id,
-      userId: reqUser._id,
-      messages: "Curtida removida!",
-    });
-  } catch (error) {
-    res.status(500).json({ errors: ["Erro interno do servidor."] });
-  }
 };
 
 //comment functionality
@@ -248,7 +244,7 @@ module.exports = {
   getPhotoById,
   updatePhoto,
   likePhoto,
-  deslikePhoto,
+  dislikePhoto,
   commentPhoto,
   searchPhotos,
 };

@@ -12,7 +12,7 @@ const {
   likePhoto,
   commentPhoto,
   searchPhotos,
-  deslikePhoto,
+  dislikePhoto,
 } = require("../controllers/PhotoController");
 
 //Middlewares
@@ -48,9 +48,9 @@ router.get("/:id", authGuard, getPhotoById);
 
 router.put("/:id", authGuard, photoUpadateValidation(), validate, updatePhoto);
 
-router.put("/like/:id", authGuard, deslikePhoto);
+router.put("/:id/dislike", authGuard, dislikePhoto);
 
-router.put("/likes/:id", authGuard, likePhoto);
+router.put("/:id/like", authGuard, likePhoto);
 
 router.put(
   "/comment/:id",
