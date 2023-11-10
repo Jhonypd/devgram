@@ -76,29 +76,29 @@ const getPhoto = async (id, token) => {
   }
 };
 
-//like in photo
-const like = async (id, token) => {
+// remove like in photo
+const dislike = async (id, token) => {
   const config = requestConfig("PUT", null, token);
 
   try {
-    const res = await fetch(api + "/photos/like/" + id, config)
-      .then((res) => res.json())
-      .catch((err) => err);
+    const res = await fetch(api + "/photos/" + id + "/dislike", config);
 
-    return res;
+    const data = await res.json();
+
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-// remove like in photo
-const deslike = async (id, token) => {
+//like in photo
+const like = async (id, token) => {
   const config = requestConfig("PUT", null, token);
 
   try {
-    const res = await fetch(api + "/photos/like/" + id, config).then((res) =>
-      res.json().catch((err) => err)
-    );
+    const res = await fetch(api + "/photos/" + id + "/like", config)
+      .then((res) => res.json())
+      .catch((err) => err);
 
     return res;
   } catch (error) {
@@ -112,7 +112,7 @@ const photoService = {
   deletePhoto,
   updatePhoto,
   getPhoto,
-  deslike,
+  dislike,
   like,
 };
 

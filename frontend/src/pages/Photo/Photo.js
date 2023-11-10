@@ -12,15 +12,18 @@ import PhotoItem from "../../components/PhotoItem";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 //redux
-import { deslike, getPhoto, like } from "../../slices/photoSlice";
+import { dislike, getPhoto, like } from "../../slices/photoSlice";
 import LikeContainer from "../../components/LikeContainer";
 
 const Photo = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+
+  const resetMessage = useResetComponentMessage(dispatch);
 
   const { user } = useSelector((state) => state.auth);
   const { photo, loading, error, message } = useSelector(
@@ -37,9 +40,12 @@ const Photo = () => {
   //likes
   const handleLike = () => {
     dispatch(like(photo._id));
+    resetMessage();
   };
-  const handleDeslike = () => {
-    dispatch(deslike(photo._id));
+
+  //deslike
+  const handleDislike = () => {
+    dispatch(dislike(photo._id));
   };
 
   if (loading) {
@@ -51,8 +57,8 @@ const Photo = () => {
       <LikeContainer
         photo={photo}
         user={user}
-        handleDeslike={handleDeslike}
         handleLike={handleLike}
+        handleDislike={handleDislike}
       />
       <div className="message-container">
         {error && <Message msg={error} type={"error"} />}
