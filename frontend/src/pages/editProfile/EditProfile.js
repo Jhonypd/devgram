@@ -11,6 +11,8 @@ import { profile, updateProfile, resetMessage } from "../../slices/userSlice";
 
 //components
 import Message from "../../components/Message";
+import ProfileContainer from "../../components/ProfileContainer";
+import LetterName from "../../components/LetterName";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -90,19 +92,17 @@ const EditProfile = () => {
       </p>
 
       {user.profileImage || previewImage ? (
-        <img
-          className="profile-image"
-          src={
+        <ProfileContainer
+          imageProfile={
             previewImage
               ? URL.createObjectURL(previewImage)
               : `${uploads}/users/${user.profileImage}`
           }
-          alt={user.name}
+          userName={user.name}
+          type={"profile-15"}
         />
       ) : (
-        <div className="not-profile-image">
-          <p>{user.name ? user.name.charAt(0) : ""}</p>
-        </div>
+        <LetterName userName={user.name} />
       )}
 
       <form onSubmit={handleSubmit}>

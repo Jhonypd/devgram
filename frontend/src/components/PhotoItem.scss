@@ -6,17 +6,11 @@
     gap: 1em;
     padding: 1em 0.5em;
 
-    img {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-    }
-
     .photo-author a {
       font-weight: bold;
     }
   }
-  img {
+  .img-item {
     width: 100%;
   }
 }

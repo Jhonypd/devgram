@@ -15,8 +15,10 @@ import { useParams } from "react-router-dom";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 //redux
-import { dislike, getPhoto, like } from "../../slices/photoSlice";
+import { dislike, getPhoto, like, comment } from "../../slices/photoSlice";
 import LikeContainer from "../../components/LikeContainer";
+import ProfileContainer from "../../components/ProfileContainer";
+import LetterName from "../../components/LetterName";
 
 const Photo = () => {
   const { id } = useParams();
@@ -30,7 +32,8 @@ const Photo = () => {
     (state) => state.photo
   );
 
-  //comentarios
+  //comment to a photo
+  const [commentText, setCommentText] = useState("");
 
   //get photo data
   useEffect(() => {
@@ -48,6 +51,19 @@ const Photo = () => {
     dispatch(dislike(photo._id));
   };
 
+  //insert a comment
+  const handleComment = (e) => {
+    e.preventDefault();
+
+    const commentData = { comment: commentText, id: photo._id };
+
+    dispatch(comment(commentData));
+
+    setCommentText("");
+
+    resetMessage();
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -63,6 +79,54 @@ const Photo = () => {
       <div className="message-container">
         {error && <Message msg={error} type={"error"} />}
         {message && <Message msg={message} type={"success"} />}
+      </div>
+      <div className="comments">
+        {photo.comments && (
+          <>
+            <h3>Comentários: ({photo.comments.length})</h3>
+            <form onSubmit={handleComment}>
+              <input
+                type="text"
+                placeholder="Comentar"
+                onChange={(e) => setCommentText(e.target.value)}
+                value={commentText || ""}
+              />
+              <input type="submit" value={"comentar"} />
+            </form>
+            {photo.comments.length === 0 && <p>Não há Comentários...</p>}
+            {photo.comments.map((comment) => (
+              <div className="comment" key={comment.comment}>
+                <div className="author">
+                  {/* {comment.userImage ? (
+                    <img
+                      src={`${uploads}/users/${comment.userImage}`}
+                      alt={comment.userName}
+                    />
+                  ) : (
+                    <div className="not-profile-image">
+                      <p>
+                        {comment.userName ? comment.userName.charAt(0) : ""}
+                      </p>
+                    </div>
+                  )} */}
+                  {comment.userImage ? (
+                    <ProfileContainer
+                      userName={comment.userName}
+                      imageProfile={`${uploads}/users/${comment.userImage}`}
+                      type={"profile-4"}
+                    />
+                  ) : (
+                    <LetterName userName={comment.userName} />
+                  )}
+                  <Link to={`/users/${comment.userId}`}>
+                    <p>{comment.userName}</p>
+                  </Link>
+                </div>
+                <p>{comment.comment}</p>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

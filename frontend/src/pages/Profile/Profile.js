@@ -23,6 +23,8 @@ import {
   deletePhoto,
   updatePhoto,
 } from "../../slices/photoSlice";
+import LetterName from "../../components/LetterName";
+import ProfileContainer from "../../components/ProfileContainer";
 
 const Profile = () => {
   const { id } = useParams();
@@ -173,12 +175,14 @@ const Profile = () => {
     <div id="profile">
       <div className="profile-header">
         {user.profileImage ? (
-          <img src={`${uploads}/users/${user.profileImage}`} alt={user.name} />
+          <ProfileContainer
+            imageProfile={`${uploads}/users/${user.profileImage}`}
+            userName={user.name}
+            type={"profile-10"}
+          />
         ) : (
           <>
-            <div className="not-image-profile">
-              <p>{user.name ? user.name.charAt(0) : ""}</p>
-            </div>
+            <LetterName userName={user.name} />
           </>
         )}
         <div className="profile-description">
