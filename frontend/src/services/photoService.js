@@ -142,12 +142,12 @@ const comment = async (data, id, token) => {
   }
 };
 
-//add comment to a photo
-const updateComment = async (data, id, token) => {
-  const config = requestConfig("PUT", data, token);
+//get all photos
+const getAllPhotos = async () => {
+  const config = requestConfig("GET");
 
   try {
-    const res = await fetch(api + "/photos/" + id + "/upadetcomment", config)
+    const res = await fetch(api + "/photos", config)
       .then((res) => res.json())
       .catch((err) => err);
 
@@ -166,7 +166,7 @@ const photoService = {
   dislike,
   like,
   discommented,
-  updateComment,
+  getAllPhotos,
   comment,
 };
 
