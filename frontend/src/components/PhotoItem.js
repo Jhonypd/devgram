@@ -19,7 +19,7 @@ const PhotoItem = ({ photo }) => {
             type={"profile-5"}
           />
         ) : (
-          <LetterName userName={user.name} />
+          <LetterName userName={user.name} type={"profile-l-5"} />
         )}
         <p className="photo-author">
           <Link to={`/users/${photo.userId}`}>{photo.userName}</Link>

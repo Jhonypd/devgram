@@ -1,8 +1,8 @@
 import "./LetterName.scss";
 
-const LetterName = ({ userName }) => {
+const LetterName = ({ userName, type }) => {
   return (
-    <div className="not-profile-image">
+    <div className={`${type} not-profile-image`}>
       <p>{userName ? userName.charAt(0) : ""}</p>
     </div>
   );

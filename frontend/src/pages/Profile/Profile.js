@@ -182,7 +182,7 @@ const Profile = () => {
           />
         ) : (
           <>
-            <LetterName userName={user.name} />
+            <LetterName userName={user.name} type={"profile-10"} />
           </>
         )}
         <div className="profile-description">

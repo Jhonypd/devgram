@@ -102,7 +102,7 @@ const EditProfile = () => {
           type={"profile-15"}
         />
       ) : (
-        <LetterName userName={user.name} />
+        <LetterName userName={user.name} type={"profile-15"} />
       )}
 
       <form onSubmit={handleSubmit}>

@@ -4,12 +4,15 @@
   border: 1px solid $border;
   background-color: black;
   padding: 1.5em 2em;
-  max-width: 70%;
   margin: 2em auto;
+  max-width: 70%;
   text-align: center;
 
   .subtitle {
     color: #ccc;
+  }
+  .not-profile-image {
+    margin: 1em auto;
   }
   .profile-image {
     width: 150px;
@@ -17,19 +20,8 @@
     border-radius: 150px;
     margin-bottom: 1em;
   }
-  .not-profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 150px;
+  .profile {
     margin: 0 auto;
     margin-bottom: 1em;
-    background-color: #0b0655;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    p {
-      font-size: 4em;
-    }
   }
 }

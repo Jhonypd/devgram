@@ -119,7 +119,10 @@ const Photo = () => {
                         type={"profile-4"}
                       />
                     ) : (
-                      <LetterName userName={comment.userName} />
+                      <LetterName
+                        userName={comment.userName}
+                        type={"profile-l-4"}
+                      />
                     )}
                     <Link to={`/users/${comment.userId}`}>
                       <p>{comment.userName}</p>
@@ -133,7 +136,7 @@ const Photo = () => {
                     <p>X</p>
                   </button>
                 </div>
-                <p>{comment.comment}</p>
+                <p className="comment-text">{comment.comment}</p>
               </div>
             ))}
           </>
