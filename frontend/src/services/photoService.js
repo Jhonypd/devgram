@@ -62,8 +62,8 @@ const updatePhoto = async (data, id, token) => {
 };
 
 // get a photo by id
-const getPhoto = async (id, token) => {
-  const config = requestConfig("GET", null, token);
+const getPhoto = async (id) => {
+  const config = requestConfig("GET");
 
   try {
     const res = await fetch(api + "/photos/" + id, config)
@@ -76,11 +76,26 @@ const getPhoto = async (id, token) => {
   }
 };
 
-// remove like in photo
-const dislike = async (id, token) => {
+//like in photo
+const like = async (id, token) => {
   const config = requestConfig("PUT", null, token);
 
   try {
+    const res = await fetch(api + "/photos/" + id + "/like", config)
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// remove like in photo
+const dislike = async (id, token) => {
+  const config = requestConfig("PUT", null, token);
+  try {
+    console.log(id, token);
     const res = await fetch(api + "/photos/" + id + "/dislike", config);
 
     const data = await res.json();
@@ -91,12 +106,18 @@ const dislike = async (id, token) => {
   }
 };
 
-//like in photo
-const like = async (id, token) => {
-  const config = requestConfig("PUT", null, token);
+//remove comments in photo
+
+const discommented = async (id, comment, token) => {
+  const config = requestConfig("DELETE", null, token);
+
+  const commentId = comment.commentId;
 
   try {
-    const res = await fetch(api + "/photos/" + id + "/like", config)
+    const res = await fetch(
+      api + "/photos/" + id + "/discommented/" + commentId,
+      config
+    )
       .then((res) => res.json())
       .catch((err) => err);
 
@@ -121,6 +142,21 @@ const comment = async (data, id, token) => {
   }
 };
 
+//add comment to a photo
+const updateComment = async (data, id, token) => {
+  const config = requestConfig("PUT", data, token);
+
+  try {
+    const res = await fetch(api + "/photos/" + id + "/upadetcomment", config)
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const photoService = {
   publishPhoto,
   getUserPhotos,
@@ -129,6 +165,8 @@ const photoService = {
   getPhoto,
   dislike,
   like,
+  discommented,
+  updateComment,
   comment,
 };
 

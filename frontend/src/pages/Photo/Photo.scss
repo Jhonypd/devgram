@@ -20,22 +20,41 @@
       padding-bottom: 1em;
       border-bottom: 1px solid #363636;
     }
-  }
-  .author {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
+    .comment {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
 
-    a {
-      p {
-        margin: 0;
-        font-size: 0.9em;
+      .comment-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .author {
+          display: flex;
+          align-items: center;
+          font-weight: bold;
+
+          a {
+            p {
+              margin: 0;
+              font-size: 0.9em;
+            }
+          }
+        }
+
+        button {
+          display: flex;
+          padding: 0;
+          padding-bottom: 0.3em;
+          background: transparent;
+        }
       }
-    }
-  }
-  .comment {
-    p {
-      margin: 0 0 0.5em 2em;
+
+      p {
+        margin: 0 0 0.5em 2em;
+      }
     }
   }
 }

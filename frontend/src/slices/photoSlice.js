@@ -78,15 +78,11 @@ export const updatePhoto = createAsyncThunk(
 );
 
 //get photo by id
-export const getPhoto = createAsyncThunk(
-  "photo/getPhoto",
-  async (id, thunkAPI) => {
-    const token = thunkAPI.getState().auth.user.token;
-    const data = await photoService.getPhoto(id, token);
+export const getPhoto = createAsyncThunk("photo/getPhoto", async (id) => {
+  const data = await photoService.getPhoto(id);
 
-    return data;
-  }
-);
+  return data;
+});
 
 // remove like in photo
 export const dislike = createAsyncThunk(
@@ -138,6 +134,27 @@ export const comment = createAsyncThunk(
     }
 
     return data;
+  }
+);
+
+export const discommented = createAsyncThunk(
+  "photo/discommented",
+  async ({ id, comment }, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    try {
+      const data = await photoService.discommented(id, comment, token);
+      // check for errors
+      if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
+      }
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        "Erro desconhecido ao remover comentário."
+      );
+    }
   }
 );
 
@@ -267,7 +284,10 @@ export const photoSlice = createSlice({
 
         state.photos.map((photo) => {
           if (photo._id === action.payload.photoId) {
-            return photo.likes.push(action.payload.userId);
+            return {
+              ...photo,
+              likes: [...photo.likes, action.payload.userId],
+            };
           }
           return photo;
         });
@@ -289,6 +309,24 @@ export const photoSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(comment.rejected, (state, action) => {
+        console.log(state, action);
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(discommented.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.photo = {
+          ...state.photo,
+          comments: state.photo.comments.filter(
+            (comment) => comment.commentId !== action.payload.commentId
+          ),
+        };
+
+        state.message = action.payload.message;
+      })
+      .addCase(discommented.rejected, (state, action) => {
         console.log(state, action);
         state.loading = false;
         state.error = action.payload;

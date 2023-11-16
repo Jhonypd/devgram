@@ -15,7 +15,13 @@ import { useParams } from "react-router-dom";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 //redux
-import { dislike, getPhoto, like, comment } from "../../slices/photoSlice";
+import {
+  dislike,
+  getPhoto,
+  like,
+  comment,
+  discommented,
+} from "../../slices/photoSlice";
 import LikeContainer from "../../components/LikeContainer";
 import ProfileContainer from "../../components/ProfileContainer";
 import LetterName from "../../components/LetterName";
@@ -55,12 +61,20 @@ const Photo = () => {
   const handleComment = (e) => {
     e.preventDefault();
 
-    const commentData = { comment: commentText, id: photo._id };
+    const commentData = {
+      comment: commentText,
+      id: photo._id,
+    };
 
     dispatch(comment(commentData));
 
     setCommentText("");
 
+    resetMessage();
+  };
+
+  const handleDiscommented = (comment) => {
+    dispatch(discommented({ id: photo._id, comment }));
     resetMessage();
   };
 
@@ -95,32 +109,29 @@ const Photo = () => {
             </form>
             {photo.comments.length === 0 && <p>Não há Comentários...</p>}
             {photo.comments.map((comment) => (
-              <div className="comment" key={comment.comment}>
-                <div className="author">
-                  {/* {comment.userImage ? (
-                    <img
-                      src={`${uploads}/users/${comment.userImage}`}
-                      alt={comment.userName}
-                    />
-                  ) : (
-                    <div className="not-profile-image">
-                      <p>
-                        {comment.userName ? comment.userName.charAt(0) : ""}
-                      </p>
-                    </div>
-                  )} */}
-                  {comment.userImage ? (
-                    <ProfileContainer
-                      userName={comment.userName}
-                      imageProfile={`${uploads}/users/${comment.userImage}`}
-                      type={"profile-4"}
-                    />
-                  ) : (
-                    <LetterName userName={comment.userName} />
-                  )}
-                  <Link to={`/users/${comment.userId}`}>
-                    <p>{comment.userName}</p>
-                  </Link>
+              <div className="comment" key={comment.commentId}>
+                <div className="comment-header">
+                  <div className="author">
+                    {comment.userImage ? (
+                      <ProfileContainer
+                        userName={comment.userName}
+                        imageProfile={`${uploads}/users/${comment.userImage}`}
+                        type={"profile-4"}
+                      />
+                    ) : (
+                      <LetterName userName={comment.userName} />
+                    )}
+                    <Link to={`/users/${comment.userId}`}>
+                      <p>{comment.userName}</p>
+                    </Link>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleDiscommented({ commentId: comment.commentId })
+                    }>
+                    <p>X</p>
+                  </button>
                 </div>
                 <p>{comment.comment}</p>
               </div>

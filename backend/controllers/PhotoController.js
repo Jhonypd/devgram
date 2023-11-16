@@ -3,6 +3,12 @@ const User = require("../models/User");
 
 const mongoose = require("mongoose");
 
+const { v4: uuidv4 } = require("uuid");
+
+const handleErros = (res, status, message) => {
+  res.status(status).json({ erros: [message] });
+};
+
 //insert a photo, with an user user related to it
 const insertPhoto = async (req, res) => {
   const { title } = req.body;
@@ -12,9 +18,12 @@ const insertPhoto = async (req, res) => {
 
   const user = await User.findById(reqUser._id);
 
+  const photoId = uuidv4();
+
   //create a photo
   const newPhoto = await Photo.create({
     image,
+    photoId: photoId,
     title,
     userId: user._id,
     userName: user.name,
@@ -22,9 +31,11 @@ const insertPhoto = async (req, res) => {
 
   //If photo was created successfully, return data
   if (!newPhoto) {
-    res.status(422).json({
-      erros: ["Houve um problema, por favor tente novamente mais tarde."],
-    });
+    handleErros(
+      res,
+      422,
+      "Houve um problema, por favor tente novamente mais tarde."
+    );
     return;
   }
 
@@ -43,15 +54,18 @@ const deletePhoto = async (req, res) => {
 
     //check if photo exists
     if (!photo) {
-      res.status(404).json({ errors: ["Foto não encontrada!"] });
+      handleErros(res, 404, "Foto não encontrada!");
       return;
     }
 
     // check if photo belongs to user
     if (!photo.userId.equals(reqUser._id)) {
-      res.status(422).json({
-        errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
-      });
+      handleErros(
+        res,
+        422,
+        "Ocorreu um erro, por favor tente novamente mais tarde."
+      );
+      return;
     }
 
     await Photo.findByIdAndDelete(photo._id);
@@ -60,7 +74,7 @@ const deletePhoto = async (req, res) => {
       .status(200)
       .json({ id: photo._id, message: "Foto excluída com sucesso!" });
   } catch (error) {
-    res.status(404).json({ errors: ["Foto não encontrada!"] });
+    handleErros(res, 404, "Foto não encontrada!");
     return;
   }
 };
@@ -94,7 +108,7 @@ const getPhotoById = async (req, res) => {
 
   //check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ["Foto não encontrada."] });
+    handleErros(res, 404, "Foto não encontrada!");
     return;
   }
 
@@ -112,15 +126,17 @@ const updatePhoto = async (req, res) => {
 
   //check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ["Foto não encontrada."] });
+    handleErros(res, 404, "Foto não encontrada!");
     return;
   }
 
   //check if photo belongs to user
   if (!photo.userId.equals(reqUser._id)) {
-    res.status(422).json({
-      errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
-    });
+    handleErros(
+      res,
+      422,
+      "Ocorreu um erro, por favor tente novamente mais tarde."
+    );
     return;
   }
 
@@ -144,7 +160,7 @@ const dislikePhoto = async (req, res) => {
 
     //check if photo exists
     if (!photo) {
-      res.status(404).json({ errors: ["Foto não encontrada!"] });
+      handleErros(res, 404, "Foto não encontrada!");
       return;
     }
 
@@ -160,7 +176,7 @@ const dislikePhoto = async (req, res) => {
       messages: "Curtida removida!",
     });
   } catch (error) {
-    res.status(500).json({ errors: ["Erro interno do servidor."] });
+    return handleErros(res, 500, "Erro interno do servidor.");
   }
 };
 
@@ -188,9 +204,64 @@ const likePhoto = async (req, res) => {
     .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida." });
 };
 
+const discommentedPhoto = async (req, res) => {
+  const { id, commentId } = req.params;
+
+  const reqUser = req.user;
+
+  try {
+    const photo = await Photo.findById(id);
+
+    // Check if photo exists
+    if (!photo) {
+      handleErros(res, 404, "Foto não encontrada!");
+      return;
+    }
+
+    // Find the comment in the photo
+    const commentIndex = photo.comments.findIndex(
+      (comment) => comment.commentId === commentId
+    );
+
+    // Check if the comment exists
+    if (commentIndex === -1) {
+      handleErros(res, 404, "Comentário não encontrado!");
+      return;
+    }
+
+    const comment = photo.comments[commentIndex];
+
+    // Check if the user is the owner of the comment or the owner of the photo
+    if (
+      !comment.userId.equals(reqUser._id) &&
+      !photo.userId.equals(reqUser._id)
+    ) {
+      handleErros(
+        res,
+        422,
+        "Você não tem permissão para remover este comentário."
+      );
+      return;
+    }
+
+    // Remove the comment from the array
+    photo.comments.splice(commentIndex, 1);
+
+    await photo.save();
+
+    res.status(200).json({
+      commentId: comment.commentId,
+      message: "Comentário removido com sucesso!",
+    });
+  } catch (error) {
+    handleErros(res, 500, "Erro interno do servidor.");
+  }
+};
+
 //comment functionality
 const commentPhoto = async (req, res) => {
   const { id } = req.params;
+
   const { comment } = req.body;
 
   const reqUser = req.user;
@@ -199,9 +270,11 @@ const commentPhoto = async (req, res) => {
 
   const photo = await Photo.findById(id);
 
+  const commentId = uuidv4();
+
   //check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ["Foto não encontrada."] });
+    handleErros(res, 404, "Foto não encontrada!");
     return;
   }
 
@@ -212,6 +285,7 @@ const commentPhoto = async (req, res) => {
     userName: user.name,
     userImage: user.profileImage,
     userId: user._id,
+    commentId: commentId,
   };
 
   photo.comments.push(userComment);
@@ -223,6 +297,7 @@ const commentPhoto = async (req, res) => {
     message: "Comentário adicionado com sucesso!",
   });
 };
+//comment functionality
 
 //Search photos by title
 
@@ -246,5 +321,6 @@ module.exports = {
   likePhoto,
   dislikePhoto,
   commentPhoto,
+  discommentedPhoto,
   searchPhotos,
 };

@@ -64,6 +64,13 @@ const Profile = () => {
     }, 2000);
   };
 
+  // change image state
+  const handleFile = (e) => {
+    const image = e.target.files[0];
+
+    setImage(image);
+  };
+
   const submitHandle = (e) => {
     e.preventDefault();
 
@@ -92,13 +99,6 @@ const Profile = () => {
         hideForm();
       }, 2500);
     }
-  };
-
-  // change image state
-  const handleFile = (e) => {
-    const image = e.target.files[0];
-
-    setImage(image);
   };
 
   // delete a photo
@@ -253,9 +253,10 @@ const Profile = () => {
       <div className="user-photos">
         <h2>Fotos publicadas:</h2>
         <div className="photos-container">
-          {photos &&
+          {Array.isArray(photos) &&
+            photos.length > 0 &&
             photos.map((photo) => (
-              <div className="photo" key={photo._id}>
+              <div className="photo" key={photo.photoId}>
                 {photo.image && (
                   <img
                     src={`${uploads}/photos/${photo.image}`}
