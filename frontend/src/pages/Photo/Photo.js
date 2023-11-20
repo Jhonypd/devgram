@@ -55,6 +55,8 @@ const Photo = () => {
   //deslike
   const handleDislike = () => {
     dispatch(dislike(photo._id));
+
+    resetMessage();
   };
 
   //insert a comment

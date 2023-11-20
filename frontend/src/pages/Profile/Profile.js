@@ -22,6 +22,7 @@ import {
   getUserPhotos,
   deletePhoto,
   updatePhoto,
+  resetPhotos,
 } from "../../slices/photoSlice";
 import LetterName from "../../components/LetterName";
 import ProfileContainer from "../../components/ProfileContainer";
@@ -55,7 +56,12 @@ const Profile = () => {
   //Load user data
   useEffect(() => {
     dispatch(getUserDetails(id));
+
     dispatch(getUserPhotos(id));
+
+    return () => {
+      dispatch(resetPhotos());
+    };
   }, [dispatch, id]);
 
   const resetComponentMessage = () => {
@@ -253,15 +259,22 @@ const Profile = () => {
       <div className="user-photos">
         <h2>Fotos publicadas:</h2>
         <div className="photos-container">
-          {Array.isArray(photos) &&
-            photos.length > 0 &&
+          {photos &&
             photos.map((photo) => (
               <div className="photo" key={photo.photoId}>
-                {photo.image && (
+                {photo.image && photo.userId === userAuth._id ? (
                   <img
                     src={`${uploads}/photos/${photo.image}`}
                     alt={photo.title}
                   />
+                ) : (
+                  <Link to={`/photos/${photo._id}`}>
+                    <img
+                      src={`${uploads}/photos/${photo.image}`}
+                      alt={photo.title}
+                      className="photo-item"
+                    />
+                  </Link>
                 )}
                 {id === userAuth._id ? (
                   <div className="actions">
@@ -275,9 +288,7 @@ const Profile = () => {
                     />
                   </div>
                 ) : (
-                  <Link className="btn" to={`/photos/${photo._id}`}>
-                    Ver
-                  </Link>
+                  ""
                 )}
               </div>
             ))}

@@ -13,6 +13,7 @@ import { profile, updateProfile, resetMessage } from "../../slices/userSlice";
 import Message from "../../components/Message";
 import ProfileContainer from "../../components/ProfileContainer";
 import LetterName from "../../components/LetterName";
+import { resetPhotos } from "../../slices/photoSlice";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const EditProfile = () => {
   //Load user data
   useEffect(() => {
     dispatch(profile());
+
+    return () => {
+      dispatch(resetPhotos());
+    };
   }, [dispatch]);
 
   //fill form with user data

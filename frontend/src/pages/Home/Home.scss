@@ -1,0 +1,23 @@
+#home {
+  width: 80%;
+  margin: 0 auto;
+  padding: 1em 0;
+
+  .photo-container {
+    max-width: 600px;
+    margin: 2em auto;
+    .btn {
+      display: block;
+      max-width: 80px;
+      text-align: center;
+    }
+  }
+
+  .no-photos {
+    text-align: center;
+
+    a {
+      color: #0094f6;
+    }
+  }
+}

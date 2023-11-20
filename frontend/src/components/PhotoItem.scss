@@ -1,6 +1,8 @@
 .photo-item {
-  .pefil-photo {
-    width: 100%;
+  width: 90%;
+  margin: 0 auto;
+  .profile-photo {
+    width: calc(100% - 1em);
     display: flex;
     align-items: center;
     gap: 1em;
@@ -10,8 +12,12 @@
       font-weight: bold;
     }
   }
-  .img-item {
+  .photo {
     width: 100%;
+    .img-item {
+      width: 100%;
+      object-fit: fill;
+    }
   }
 }
 #home {

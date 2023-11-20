@@ -37,6 +37,7 @@ const register = async (req, res) => {
     name,
     email,
     password: passwordHash,
+    profileImage: "",
   });
 
   if (!newUser) {

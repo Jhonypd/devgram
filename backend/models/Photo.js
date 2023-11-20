@@ -10,6 +10,7 @@ const photoSchema = new Schema(
     userId: mongoose.ObjectId,
     userName: String,
     photoId: String,
+    photoUser: String,
   },
   {
     timestamps: true,

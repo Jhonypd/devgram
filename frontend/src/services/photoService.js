@@ -21,13 +21,19 @@ const getUserPhotos = async (id, token) => {
   const config = requestConfig("GET", null, token);
 
   try {
-    const res = await fetch(api + "/photos/user/" + id, config)
-      .then((res) => res.json())
-      .catch((err) => err);
+    const res = await fetch(api + "/photos/user/" + id, config);
 
-    return res;
+    if (!res.ok) {
+      throw new Error(`Erro na requisição: ${res.status}`);
+    }
+
+    const data = res.json();
+
+    return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+
+    return { errors: [error.message] };
   }
 };
 
@@ -143,8 +149,8 @@ const comment = async (data, id, token) => {
 };
 
 //get all photos
-const getAllPhotos = async () => {
-  const config = requestConfig("GET");
+const getPhotos = async (token) => {
+  const config = requestConfig("GET", null, token);
 
   try {
     const res = await fetch(api + "/photos", config)
@@ -166,7 +172,7 @@ const photoService = {
   dislike,
   like,
   discommented,
-  getAllPhotos,
+  getPhotos,
   comment,
 };
 

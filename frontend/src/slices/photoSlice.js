@@ -160,11 +160,16 @@ export const discommented = createAsyncThunk(
 );
 
 //get all photos
-export const getPhotos = createAsyncThunk("photo/getall", async () => {
-  const data = await photoService.getState();
+export const getPhotos = createAsyncThunk(
+  "photo/getall",
+  async (_, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
 
-  return data;
-});
+    const data = await photoService.getPhotos(token);
+
+    return data;
+  }
+);
 
 export const photoSlice = createSlice({
   name: "photo",
@@ -173,6 +178,9 @@ export const photoSlice = createSlice({
     resetMessage: (state) => {
       state.message = null;
       state.error = null;
+    },
+    resetPhotos: (state) => {
+      state.photos = [];
     },
   },
   extraReducers: (builder) => {
@@ -292,10 +300,7 @@ export const photoSlice = createSlice({
 
         state.photos.map((photo) => {
           if (photo._id === action.payload.photoId) {
-            return {
-              ...photo,
-              likes: [...photo.likes, action.payload.userId],
-            };
+            return photo.likes.push(action.payload.userId);
           }
           return photo;
         });
@@ -352,5 +357,5 @@ export const photoSlice = createSlice({
   },
 });
 
-export const { resetMessage } = photoSlice.actions;
+export const { resetMessage, resetPhotos } = photoSlice.actions;
 export default photoSlice.reducer;

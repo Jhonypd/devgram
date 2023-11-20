@@ -20,6 +20,8 @@ const insertPhoto = async (req, res) => {
 
   const photoId = uuidv4();
 
+  const photoUser = user.profileImage || "";
+
   //create a photo
   const newPhoto = await Photo.create({
     image,
@@ -27,6 +29,7 @@ const insertPhoto = async (req, res) => {
     title,
     userId: user._id,
     userName: user.name,
+    photoUser: photoUser,
   });
 
   //If photo was created successfully, return data
@@ -92,12 +95,27 @@ const getAllPhotos = async (req, res) => {
 
 const getUserPhotos = async (req, res) => {
   const { id } = req.params;
+  const reqUser = req.user;
+
+  const user = await User.findById(reqUser._id);
 
   const photos = await Photo.find({ userId: id })
     .sort([["createdAt", -1]])
     .exec();
 
-  return res.status(200).json(photos);
+  const upadtedPhotos = [];
+
+  let userImageAvatar = user.profileImage !== "";
+
+  for (const photo of photos) {
+    if (!photo.photoUser && !userImageAvatar) {
+      photo.photoUser = user.profileImage;
+      await photo.save();
+    }
+    upadtedPhotos.push(photo.toObject());
+  }
+
+  return res.status(200).json(upadtedPhotos);
 };
 
 //Get photo by id

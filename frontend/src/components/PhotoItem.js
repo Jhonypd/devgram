@@ -2,35 +2,38 @@ import "./PhotoItem.scss";
 import { uploads } from "../utils/config";
 
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import ProfileContainer from "./ProfileContainer";
 import LetterName from "./LetterName";
 
 const PhotoItem = ({ photo }) => {
-  const { user } = useSelector((state) => state.user);
+  //const { user } = useSelector((state) => state.user);
 
   return (
     <div className="photo-item">
-      <div className="pefil-photo">
-        {user.profileImage ? (
+      <div className="profile-photo">
+        {photo.photoUser ? (
           <ProfileContainer
-            imageProfile={`${uploads}/users/${user.profileImage}`}
-            userName={user.name}
+            imageProfile={`${uploads}/users/${photo.photoUser}`}
+            userName={photo.userName}
             type={"profile-5"}
           />
         ) : (
-          <LetterName userName={user.name} type={"profile-l-5"} />
+          <LetterName userName={photo.userName} type={"profile-l-5"} />
         )}
+
         <p className="photo-author">
           <Link to={`/users/${photo.userId}`}>{photo.userName}</Link>
         </p>
       </div>
       {photo.image && (
-        <img
-          src={`${uploads}/photos/${photo.image}`}
-          alt={photo.title}
-          className="img-item"
-        />
+        <div className="photo">
+          <img
+            src={`${uploads}/photos/${photo.image}`}
+            alt={photo.title}
+            className="img-item"
+          />
+        </div>
       )}
       <h2>{photo.title}</h2>
     </div>
