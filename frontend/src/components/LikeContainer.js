@@ -2,6 +2,8 @@ import "./LikeContainer.scss";
 
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
+import { Link } from "react-router-dom";
+
 const LikeContainer = ({ photo, user, handleDislike, handleLike }) => {
   return (
     <div className="like">
@@ -15,6 +17,9 @@ const LikeContainer = ({ photo, user, handleDislike, handleLike }) => {
           <p>{photo.likes.length} likes</p>
         </>
       )}
+      <Link className="btn" to={`/photos/${photo._id}`}>
+        Ver mais
+      </Link>
     </div>
   );
 };
