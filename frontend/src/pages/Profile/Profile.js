@@ -6,6 +6,9 @@ import { uploads } from "../../utils/config";
 import Message from "../../components/Message";
 import { Link, useParams } from "react-router-dom";
 import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
+import LetterName from "../../components/LetterName";
+import ProfileContainer from "../../components/ProfileContainer";
+import ProfileDeleted from "../../components/ProfileDeleted";
 
 //pages
 import Loading from "../../components/Loading";
@@ -24,15 +27,14 @@ import {
   updatePhoto,
   resetPhotos,
 } from "../../slices/photoSlice";
-import LetterName from "../../components/LetterName";
-import ProfileContainer from "../../components/ProfileContainer";
+import { TailSpin, ThreeDots } from "react-loader-spinner";
 
 const Profile = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.user);
+  const { user, error, loading } = useSelector((state) => state.user);
   const { user: userAuth } = useSelector((state) => state.auth);
   const {
     photos,
@@ -163,9 +165,6 @@ const Profile = () => {
 
     resetComponentMessage();
 
-    console.log(errorPhoto);
-    console.log(messagePhoto);
-
     if (!messagePhoto) {
       setTimeout(() => {
         hideForm();
@@ -173,29 +172,62 @@ const Profile = () => {
     }
   };
 
+  console.log(user);
+
   if (loading) {
     return <Loading />;
   }
 
   return (
     <div id="profile">
-      <div className="profile-header">
-        {user.profileImage ? (
-          <ProfileContainer
-            imageProfile={`${uploads}/users/${user.profileImage}`}
-            userName={user.name}
-            type={"profile-10"}
-          />
-        ) : (
-          <>
-            <LetterName userName={user.name} type={"profile-10"} />
-          </>
-        )}
-        <div className="profile-description">
-          <h2>{user.name}</h2>
-          <p>{user.bio}</p>
+      {id !== userAuth._id && (
+        <div className="profile-header">
+          {user ? (
+            <>
+              {user.profileImage && (
+                <ProfileContainer
+                  imageProfile={`${uploads}/users/${user.profileImage}`}
+                  userName={user.name}
+                  type={"profile-10"}
+                />
+              )}
+
+              {user.profileImage === "" && user.name && (
+                <LetterName userName={user.name} type={"profile-10"} />
+              )}
+
+              {user.name && (
+                <div className="profile-description">
+                  <h2>{user.name}</h2>
+                  <p>{user.bio}</p>
+                </div>
+              )}
+            </>
+          ) : (
+            <ProfileDeleted />
+          )}
         </div>
-      </div>
+      )}
+
+      {id === userAuth._id && (
+        <div className="profile-header">
+          {user.profileImage ? (
+            <ProfileContainer
+              imageProfile={`${uploads}/users/${user.profileImage}`}
+              userName={user.name}
+              type={"profile-10"}
+            />
+          ) : (
+            <>
+              <LetterName userName={user.name} type={"profile-10"} />
+            </>
+          )}
+          <div className="profile-description">
+            <h2>{user.name}</h2>
+            <p>{user.bio}</p>
+          </div>
+        </div>
+      )}
       {id === userAuth._id && (
         <>
           <div className="new-post-btn" ref={btn}>
@@ -225,7 +257,13 @@ const Profile = () => {
 
               {!loadingPhoto && <input type="submit" value="Postar" />}
               {loadingPhoto && (
-                <input type="submit" disabled value="Aguarde..." />
+                <TailSpin
+                  color="#fff"
+                  radius={2}
+                  height={30}
+                  width={30}
+                  wrapperClass="TailSpin"
+                />
               )}
             </form>
           </div>
@@ -242,7 +280,16 @@ const Profile = () => {
                 value={editTitle || ""}
               />
 
-              <input type="submit" value={"Atualizar"} />
+              {!loadingPhoto && <input type="submit" value={"Atualizar"} />}
+              {loadingPhoto && (
+                <ThreeDots
+                  color="#fff"
+                  radius={4}
+                  height={30}
+                  width={30}
+                  wrapperClass="TailSpin"
+                />
+              )}
               <button
                 type="button"
                 className="cancel-btn"
@@ -257,7 +304,8 @@ const Profile = () => {
       )}
 
       <div className="user-photos">
-        <h2>Fotos publicadas:</h2>
+        {/* <h2>Fotos publicadas:</h2> */}
+        <div className="header"></div>
         <div className="photos-container">
           {photos &&
             photos.map((photo) => (

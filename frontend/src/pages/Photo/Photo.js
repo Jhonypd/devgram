@@ -86,12 +86,14 @@ const Photo = () => {
   return (
     <div id="photo">
       <PhotoItem photo={photo} />
-      <LikeContainer
-        photo={photo}
-        user={user}
-        handleLike={handleLike}
-        handleDislike={handleDislike}
-      />
+      <div className="like">
+        <LikeContainer
+          photo={photo}
+          user={user}
+          handleLike={handleLike}
+          handleDislike={handleDislike}
+        />
+      </div>
       <div className="message-container">
         {error && <Message msg={error} type={"error"} />}
         {message && <Message msg={message} type={"success"} />}

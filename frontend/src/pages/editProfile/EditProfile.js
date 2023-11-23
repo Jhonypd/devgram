@@ -15,6 +15,9 @@ import ProfileContainer from "../../components/ProfileContainer";
 import LetterName from "../../components/LetterName";
 import { resetPhotos } from "../../slices/photoSlice";
 
+//spinners
+import { TailSpin } from "react-loader-spinner";
+
 const EditProfile = () => {
   const dispatch = useDispatch();
 
@@ -141,7 +144,15 @@ const EditProfile = () => {
           />
         </label>
         {!loading && <input type="submit" value="Atualizar" />}
-        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {loading && (
+          <TailSpin
+            color="#fff"
+            radius={2}
+            height={30}
+            width={30}
+            wrapperClass="TailSpin"
+          />
+        )}
         {error && <Message msg={error} type="error" />}
         {message && <Message msg={message} type="success" />}
       </form>

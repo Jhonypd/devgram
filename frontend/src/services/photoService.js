@@ -1,5 +1,24 @@
 import { api, requestConfig } from "../utils/config";
 
+const handleErrors = (error) => {
+  console.error(error);
+  return { errors: [error.message || "Ocorreu um erro desconhecido."] };
+};
+
+const fetchData = async (url, config) => {
+  try {
+    const res = await fetch(url, config);
+
+    if (!res.ok) {
+      throw new Error(`Erro na requisição: ${res.status}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    return handleErrors(error);
+  }
+};
+
 //publish an user photo
 const publishPhoto = async (data, token) => {
   const config = requestConfig("POST", data, token, true);
@@ -163,6 +182,15 @@ const getPhotos = async (token) => {
   }
 };
 
+// get more photos
+const getMorePhotos = async (page, token) => {
+  const config = requestConfig("GET", null, token);
+  const res = await fetchData(api + "/photos/more?page=" + page, config);
+  console.log(page, res);
+
+  return res;
+};
+
 const photoService = {
   publishPhoto,
   getUserPhotos,
@@ -172,8 +200,9 @@ const photoService = {
   dislike,
   like,
   discommented,
-  getPhotos,
   comment,
+  getPhotos,
+  getMorePhotos,
 };
 
 export default photoService;

@@ -91,6 +91,34 @@ const getAllPhotos = async (req, res) => {
   return res.status(200).json(photos);
 };
 
+//Get more photos
+const getMorePhotos = async (req, res) => {
+  const { page } = req.query;
+  const pageSize = 4;
+
+  try {
+    const skip = (page - 1) * pageSize;
+
+    const totalPhotos = await Photo.countDocuments({});
+
+    const photos = await Photo.find({})
+      .sort([["createdAt", -1]])
+      .skip(skip)
+      .limit(pageSize)
+      .exec();
+
+    const totalPages = Math.ceil(totalPhotos / pageSize);
+
+    console.log("Total de Fotos:", totalPhotos);
+    console.log("Total de pages:", totalPages);
+
+    return res.status(200).json({ photos, totalPages });
+  } catch (error) {
+    handleErros(res, 500, "Erro interno do servidor.");
+    console.error("Erro no controlador getMorePhotos:", error);
+  }
+};
+
 //Get user photos
 
 const getUserPhotos = async (req, res) => {
@@ -315,7 +343,6 @@ const commentPhoto = async (req, res) => {
     message: "Comentário adicionado com sucesso!",
   });
 };
-//comment functionality
 
 //Search photos by title
 
@@ -333,6 +360,7 @@ module.exports = {
   insertPhoto,
   deletePhoto,
   getAllPhotos,
+  getMorePhotos,
   getUserPhotos,
   getPhotoById,
   updatePhoto,

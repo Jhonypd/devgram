@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <div>
       <nav id="nav">
-        <Link to={"/"}>DevGram</Link>
+        <Link to={"/"}>CodeSnap</Link>
         <form id="search-form">
           <BsSearch />
           <input type="text" placeholder="Pesquisar" />

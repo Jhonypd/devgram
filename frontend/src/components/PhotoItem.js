@@ -7,8 +7,6 @@ import ProfileContainer from "./ProfileContainer";
 import LetterName from "./LetterName";
 
 const PhotoItem = ({ photo }) => {
-  //const { user } = useSelector((state) => state.user);
-
   return (
     <div className="photo-item">
       <div className="profile-photo">

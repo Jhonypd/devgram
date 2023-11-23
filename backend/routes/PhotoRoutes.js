@@ -14,6 +14,7 @@ const {
   searchPhotos,
   dislikePhoto,
   discommentedPhoto,
+  getMorePhotos,
 } = require("../controllers/PhotoController");
 
 //Middlewares
@@ -40,6 +41,8 @@ router.post(
 router.delete("/:id", authGuard, deletePhoto);
 
 router.get("/", authGuard, getAllPhotos);
+
+router.get("/more", authGuard, getMorePhotos);
 
 router.get("/user/:id", authGuard, getUserPhotos);
 

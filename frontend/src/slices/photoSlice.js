@@ -4,6 +4,8 @@ import photoService from "../services/photoService";
 const initialState = {
   photos: [],
   photo: {},
+  totalPages: 0,
+  currentPage: 1,
   error: false,
   success: false,
   loading: false,
@@ -102,7 +104,6 @@ export const dislike = createAsyncThunk(
 );
 
 //like a photo
-
 export const like = createAsyncThunk("photo/like", async (id, thunkAPI) => {
   const token = thunkAPI.getState().auth.user.token;
 
@@ -167,6 +168,17 @@ export const getPhotos = createAsyncThunk(
 
     const data = await photoService.getPhotos(token);
 
+    return data;
+  }
+);
+
+export const getMorePhotos = createAsyncThunk(
+  "photo/getmorephotos",
+  async (page, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.getMorePhotos(page, token);
+    console.log(data);
     return data;
   }
 );
@@ -353,6 +365,21 @@ export const photoSlice = createSlice({
         state.success = true;
         state.error = null;
         state.photos = action.payload;
+      })
+      .addCase(getMorePhotos.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getMorePhotos.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.totalPages = action.payload.totalPages;
+        state.photos = action.payload.photos;
+      })
+      .addCase(getMorePhotos.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
