@@ -143,14 +143,14 @@ const EditProfile = () => {
             value={password || ""}
           />
         </label>
-        {!loading && <input type="submit" value="Atualizar" />}
+        {!loading && <input className="btn" type="submit" value="Atualizar" />}
         {loading && (
           <TailSpin
             color="#fff"
             radius={2}
             height={30}
             width={30}
-            wrapperClass="TailSpin"
+            wrapperClass="uploading"
           />
         )}
         {error && <Message msg={error} type="error" />}

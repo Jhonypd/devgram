@@ -20,6 +20,21 @@
 
   .btn {
     position: relative;
-    left: 55%;
+    left: 27em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #home {
+    .btn {
+      left: 27em;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  #home {
+    .btn {
+      left: 17em;
+    }
   }
 }

@@ -5,7 +5,7 @@
   background-color: black;
   padding: 1.5em 2em;
   margin: 2em auto;
-  max-width: 70%;
+  max-width: 100%;
   text-align: center;
 
   .subtitle {
@@ -14,15 +14,17 @@
   .not-profile-image {
     margin: 1em auto;
   }
-  .profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 150px;
+  .profile-15 {
     margin-bottom: 1em;
   }
-  .profile {
+  form {
+    max-width: 600px;
     margin: 0 auto;
-    margin-bottom: 1em;
+
+    .btn {
+      max-width: 150px;
+      margin: 1em auto;
+    }
   }
 }
 .TailSpin {

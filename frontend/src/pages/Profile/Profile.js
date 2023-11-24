@@ -5,7 +5,12 @@ import { uploads } from "../../utils/config";
 // components
 import Message from "../../components/Message";
 import { Link, useParams } from "react-router-dom";
-import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
+import {
+  BsFillEyeFill,
+  BsFillPlusSquareFill,
+  BsPencilFill,
+  BsXLg,
+} from "react-icons/bs";
 import LetterName from "../../components/LetterName";
 import ProfileContainer from "../../components/ProfileContainer";
 import ProfileDeleted from "../../components/ProfileDeleted";
@@ -16,25 +21,27 @@ import Loading from "../../components/Loading";
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
 import {
   publishPhoto,
-  resetMessage,
   getUserPhotos,
   deletePhoto,
   updatePhoto,
   resetPhotos,
 } from "../../slices/photoSlice";
-import { TailSpin, ThreeDots } from "react-loader-spinner";
+import { Grid, TailSpin, ThreeDots } from "react-loader-spinner";
 
 const Profile = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { user, error, loading } = useSelector((state) => state.user);
+  const resetMessage = useResetComponentMessage(dispatch);
+
+  const { user, loading } = useSelector((state) => state.user);
   const { user: userAuth } = useSelector((state) => state.auth);
   const {
     photos,
@@ -66,12 +73,6 @@ const Profile = () => {
     };
   }, [dispatch, id]);
 
-  const resetComponentMessage = () => {
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 2000);
-  };
-
   // change image state
   const handleFile = (e) => {
     const image = e.target.files[0];
@@ -100,7 +101,7 @@ const Profile = () => {
 
     setTitle("");
 
-    resetComponentMessage();
+    resetMessage();
 
     if (!messagePhoto) {
       setTimeout(() => {
@@ -113,7 +114,7 @@ const Profile = () => {
   const handleDelete = (id) => {
     dispatch(deletePhoto(id));
 
-    resetComponentMessage();
+    resetMessage();
   };
 
   //show or hide forms
@@ -163,7 +164,7 @@ const Profile = () => {
 
     dispatch(updatePhoto(photoData));
 
-    resetComponentMessage();
+    resetMessage();
 
     if (!messagePhoto) {
       setTimeout(() => {
@@ -172,10 +173,12 @@ const Profile = () => {
     }
   };
 
-  console.log(user);
-
   if (loading) {
-    return <Loading />;
+    return (
+      <Loading>
+        <Grid wrapperClass="loading" color="#fff" />
+      </Loading>
+    );
   }
 
   return (
@@ -231,7 +234,11 @@ const Profile = () => {
       {id === userAuth._id && (
         <>
           <div className="new-post-btn" ref={btn}>
-            <button onClick={handlePost}>Nova foto</button>
+            <button onClick={handlePost}>
+              <span>
+                <BsFillPlusSquareFill />{" "}
+              </span>
+            </button>
           </div>
           <div className="new-photo hide" ref={newPhotoForm}>
             <div className="nav-form">
@@ -262,7 +269,7 @@ const Profile = () => {
                   radius={2}
                   height={30}
                   width={30}
-                  wrapperClass="TailSpin"
+                  wrapperClass="uploading"
                 />
               )}
             </form>
@@ -287,7 +294,7 @@ const Profile = () => {
                   radius={4}
                   height={30}
                   width={30}
-                  wrapperClass="TailSpin"
+                  wrapperClass="uploading"
                 />
               )}
               <button
@@ -305,7 +312,7 @@ const Profile = () => {
 
       <div className="user-photos">
         {/* <h2>Fotos publicadas:</h2> */}
-        <div className="header"></div>
+        <div className="user-photos-header"></div>
         <div className="photos-container">
           {photos &&
             photos.map((photo) => (

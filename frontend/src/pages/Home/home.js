@@ -13,6 +13,7 @@ import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 //redux
 import { dislike, getPhotos, like } from "../../slices/photoSlice";
+import { Grid } from "react-loader-spinner";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,11 @@ const Home = () => {
   };
 
   if (loading) {
-    return <Loading />;
+    return (
+      <Loading>
+        <Grid wrapperClass="loading" color="#fff" />
+      </Loading>
+    );
   }
 
   return (

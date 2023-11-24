@@ -1,17 +1,7 @@
 import "./Loading.scss";
 
-const Loading = () => {
-  return (
-    <div className="loading">
-      <div className="loading-sound-wave">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
-  );
+const Loading = ({ children }) => {
+  return <div className="loading">{children}</div>;
 };
 
 export default Loading;

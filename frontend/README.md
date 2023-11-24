@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# DevGram
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O projeto inspirado no Instagram com sistema de autenticação, desenvolvido utilizando Node.js, Express, React.js, MongoDB, e outras tecnologias.
 
-## Available Scripts
+<p align="center"><em>Veja o app: <a href="" target="_blank">codesnap.vercel.app</a></em></p>
 
-In the project directory, you can run:
+## Índice
 
-### `npm start`
+1. [Sobre](#sobre)
+2. [Recursos](#recursos)
+3. [Instalação](#instalação)
+4. [Uso](#uso)
+5. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+6. [Funcionalidades](#funcionalidades)
+7. [Páginas](#páginas)
+8. [Contribuição](#contribuição)
+9. [Licença](#licença)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Sobre
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+O DevGram é um projeto desenvolvido com o objetivo de replicar funcionalidades básicas do Instagram, incluindo autenticação de usuários, postagem de fotos, feed, curtidas, comentários e muito mais.
 
-### `npm test`
+## Recursos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Autenticação de usuários
+- Postagem e exclusão de fotos
+- Feed de fotos estilo Instagram
+- Interatividade com curtidas e comentários
+- Edição de perfil
+- Páginas protegidas por autenticação
 
-### `npm run build`
+## Instalação
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para instalar e configurar o projeto localmente, siga estas instruções:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+observação: para baixar o projeto completo você precisará acessar a branch frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Clone o repositório
+git clone https://github.com/Jhonypd/devgram.git
 
-### `npm run eject`
+# Entre no diretório do backend
+cd devgram/backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Instale as dependências
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Inicie o servidor
+npm run dev
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# volte a raiz do projeto
+cd ../
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Entre no diretório do frontend
+cd devgram/frontend
 
-## Learn More
+# Inicie o app
+npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Uso
 
-### Code Splitting
+Após a instalação, inicie o servidor backend e frontend. Acesse o aplicativo no navegador e explore as funcionalidades como autenticação, postagem de fotos e interação com o feed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Tecnologias Utilizadas
 
-### Analyzing the Bundle Size
+<ul>
+    <li>Node.js</li>
+    <li>Node.js</li>
+    <li>Node.js</li>
+    <li>Express</li>
+    <li>React.js</li>
+    <li>MongoDB</li>
+    <li>React Icons</li>
+    <li>React Router DOM</li>
+    <li></li>
+    <li>Sass</li>
+    <li>Redux Toolkit</li>
+    <li>Redux</li>
+    <li>React Loader Spinner</li>
+</ul>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Funcionalidades
 
-### Making a Progressive Web App
+<ul>
+    <li><strong>Autenticação:</strong></li> Logar, deslogar, criar novo usuário.
+    <li><strong>Feed:</strong></li> Visualizar fotos na home como em um feed.
+    <li><strong>Interatividade:</strong></li> Curtir e comentar fotos, desfazer ações.
+    <li><strong>Perfil:</strong></li> Visualizar perfil de quem postou a foto.
+    <li><strong>Ações Protegidas:</strong></li> Todas as ações são protegidas por autenticação.
+    <li><strong>Postagem:</strong></li> Postar e excluir fotos.
+    <li><strong>Edição:</strong></li> Editar fotos e perfil.
+    Páginas
+    <li><strong>Home:</strong></li> Feed de fotos.
+    <li><strong>Perfil:</strong></li> Página de perfil do usuário logado.
+    <li><strong>Editar Perfil:</strong></li> Página para editar informações do perfil.
+    <li><strong>Visualizar Foto:</strong></li> Página para visualizar uma foto individualmente.
+    <li><strong>Ver Perfil de Outras Pessoas:</strong></li> Página para visualizar o perfil de outros usuários.
+</ul>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Contribuição
 
-### Advanced Configuration
+Contribuições são bem-vindas! Siga as diretrizes de contribuição e sinta-se à vontade para abrir problemas ou propor novos recursos.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Licença
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Este projeto está sob a [Licença MIT](https://github.com/Jhonypd/devgram/blob/frontend/LICENCE).
