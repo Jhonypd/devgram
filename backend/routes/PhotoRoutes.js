@@ -12,6 +12,9 @@ const {
   likePhoto,
   commentPhoto,
   searchPhotos,
+  dislikePhoto,
+  discommentedPhoto,
+  getMorePhotos,
 } = require("../controllers/PhotoController");
 
 //Middlewares
@@ -39,18 +42,24 @@ router.delete("/:id", authGuard, deletePhoto);
 
 router.get("/", authGuard, getAllPhotos);
 
+router.get("/more", authGuard, getMorePhotos);
+
 router.get("/user/:id", authGuard, getUserPhotos);
 
 router.get("/search", authGuard, searchPhotos);
 
-router.get("/:id", authGuard, getPhotoById);
+router.get("/:id", getPhotoById);
 
 router.put("/:id", authGuard, photoUpadateValidation(), validate, updatePhoto);
 
-router.put("/like/:id", authGuard, likePhoto);
+router.put("/:id/dislike", authGuard, dislikePhoto);
+
+router.put("/:id/like", authGuard, likePhoto);
+
+router.delete("/:id/discommented/:commentId", authGuard, discommentedPhoto);
 
 router.put(
-  "/comment/:id",
+  "/:id/comment",
   authGuard,
   commentValidation(),
   validate,

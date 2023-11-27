@@ -25,7 +25,7 @@ const register = async (req, res) => {
 
   const user = await User.findOne({ email });
   if (user) {
-    res.status(422).json({ erros: ["Por favor, utilize outro e-mail"] });
+    res.status(422).json({ errors: ["Por favor, utilize outro e-mail"] });
     return;
   }
 
@@ -37,6 +37,7 @@ const register = async (req, res) => {
     name,
     email,
     password: passwordHash,
+    profileImage: "",
   });
 
   if (!newUser) {
@@ -63,7 +64,7 @@ const login = async (req, res) => {
 
   //check if password is correct
   if (!(await bcrypt.compare(password, user.password))) {
-    res.status(422).json({ erros: ["Senha inválida."] });
+    res.status(422).json({ errors: ["Senha inválida."] });
     return;
   }
 

@@ -1,0 +1,40 @@
+.like {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #363636;
+  border-bottom: 1px solid #363636;
+
+  svg {
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+
+  p {
+    margin-left: 1em;
+  }
+}
+#home {
+  .like {
+    border: none;
+  }
+
+  .btn {
+    position: relative;
+    left: 27em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #home {
+    .btn {
+      left: 27em;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  #home {
+    .btn {
+      left: 17em;
+    }
+  }
+}

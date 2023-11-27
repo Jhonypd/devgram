@@ -1,0 +1,57 @@
+.photo-item {
+  width: 100%;
+  margin: 0 auto;
+  .profile-photo {
+    width: calc(100% - 1em);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 0;
+
+    .photo-author a {
+      font-weight: bold;
+    }
+  }
+  .photo {
+    width: 100%;
+    .img-item {
+      max-height: 550px;
+      width: 100%;
+      object-fit: fill;
+    }
+  }
+}
+#home {
+  .photo-item {
+    h2 {
+      margin-bottom: 0.2em;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #home {
+    .photo-item {
+      width: 100%;
+
+      .photo {
+        .img-item {
+          max-height: 450px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  #home {
+    .photo-item {
+      .photo {
+        .img-item {
+          max-height: 300px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}

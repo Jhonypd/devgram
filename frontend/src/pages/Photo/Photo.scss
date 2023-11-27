@@ -1,0 +1,62 @@
+#photo {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 2em;
+
+  .img-item {
+    width: 100%;
+  }
+
+  .message-container {
+    margin: 1em 0;
+  }
+
+  .comments {
+    text-align: left;
+
+    form {
+      margin-bottom: 2em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid #363636;
+    }
+    .comment {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 1em 0;
+
+      .comment-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .author {
+          display: flex;
+          align-items: center;
+          font-weight: bold;
+          column-gap: 1em;
+
+          a {
+            p {
+              margin: 0;
+              font-size: 0.9em;
+            }
+          }
+        }
+
+        button {
+          display: flex;
+          padding: 0;
+          padding-bottom: 0.3em;
+          background: transparent;
+        }
+      }
+
+      .comment-text {
+        margin: 0 0 0.5em 2em;
+      }
+    }
+  }
+}
