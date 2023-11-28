@@ -1,5 +1,5 @@
-export const api = "https://api-codesnap.vercel.app/api";
-export const uploads = "https://api-codesnap.vercel.app/uploads";
+export const api = "https://apicode.vercel.app/api";
+export const uploads = "https://apicode.vercel.app/uploads";
 
 export const requestConfig = (method, data, token = null, image = null) => {
   let config;
