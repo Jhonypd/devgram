@@ -1,0 +1,32 @@
+@import "../../sass/vars.scss";
+
+#edit-profile {
+  border: 1px solid $border;
+  background-color: black;
+  padding: 1.5em 2em;
+  margin: 2em auto;
+  max-width: 100%;
+  text-align: center;
+
+  .subtitle {
+    color: #ccc;
+  }
+  .not-profile-image {
+    margin: 1em auto;
+  }
+  .profile-15 {
+    margin-bottom: 1em;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+
+    .btn {
+      max-width: 150px;
+      margin: 1em auto;
+    }
+  }
+}
+.TailSpin {
+  margin: 0 auto;
+}
