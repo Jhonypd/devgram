@@ -120,7 +120,6 @@ const like = async (id, token) => {
 const dislike = async (id, token) => {
   const config = requestConfig("PUT", null, token);
   try {
-    console.log(id, token);
     const res = await fetch(api + "/photos/" + id + "/dislike", config);
 
     const data = await res.json();

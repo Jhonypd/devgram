@@ -2,7 +2,7 @@
 
 O projeto inspirado no Instagram com sistema de autenticação, desenvolvido utilizando Node.js, Express, React.js, MongoDB, e outras tecnologias.
 
-<p align="center"><em>Veja o app: <a href="" target="_blank">codesnap.vercel.app</a></em></p>
+<p align="center"><em>Veja o app: <a href="https://codesnapio.vercel.app/" target="_blank">codesnap.vercel.app</a></em></p>
 
 ## Índice
 
