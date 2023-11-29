@@ -15,26 +15,12 @@
 }
 #home {
   .like {
+    justify-content: space-between;
     border: none;
-  }
 
-  .btn {
-    position: relative;
-    left: 27em;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  #home {
-    .btn {
-      left: 27em;
-    }
-  }
-}
-@media screen and (max-width: 600px) {
-  #home {
-    .btn {
-      left: 17em;
+    .content-likes {
+      display: flex;
+      align-items: center;
     }
   }
 }

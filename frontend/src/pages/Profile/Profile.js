@@ -13,9 +13,6 @@ import {
   BsXLg,
 } from "react-icons/bs";
 import { Grid, TailSpin, ThreeDots } from "react-loader-spinner";
-import LetterName from "../../components/NameUser/LetterName";
-import ProfileContainer from "../../components/Profile/ProfileContainer";
-import ProfileDeleted from "../../components/Profile/ProfileDeleted";
 
 //pages
 import Loading from "../../components/Loading/Loading";
