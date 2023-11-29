@@ -7,9 +7,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 
 //components
-import Navbar from "./components/Navbar";
-//import Footer from "./components/Footer";
-import Loading from "./components/Loading";
+import Navbar from "./components/Navbar/Navbar";
+import Loading from "./components/Loading/Loading";
 
 //pages
 import Home from "./pages/Home/Home";
