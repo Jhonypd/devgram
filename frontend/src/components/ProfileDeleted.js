@@ -6,7 +6,7 @@ const ProfileDeleted = () => {
     <>
       <LetterName userName="" type={"profile-10 prof-block"} />
       <div className="profile-description desc-block">
-        <h2>Usuário não encontrado</h2>
+        <h2 className="h2">Usuário não encontrado</h2>
       </div>
     </>
   );

@@ -205,6 +205,7 @@ export const photoSlice = createSlice({
     },
     resetPhotos: (state) => {
       state.photos = [];
+      state.photo = {};
     },
   },
   extraReducers: (builder) => {
