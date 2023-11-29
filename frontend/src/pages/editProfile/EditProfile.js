@@ -10,9 +10,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { profile, updateProfile, resetMessage } from "../../slices/userSlice";
 
 //components
-import Message from "../../components/Message";
-import ProfileContainer from "../../components/ProfileContainer";
-import LetterName from "../../components/LetterName";
+import Message from "../../components/Message/Message";
+import ProfileContainer from "../../components/Profile/ProfileContainer";
+import LetterName from "../../components/NameUser/LetterName";
 import { resetPhotos } from "../../slices/photoSlice";
 
 //spinners

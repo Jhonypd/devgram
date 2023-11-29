@@ -77,11 +77,16 @@
   .user-photos {
     height: auto;
     .user-photos-header {
-      padding: 0.5em;
       margin: 1em 0;
       border: none;
-      border-left: 1px solid #363636;
-      border-right: 1px solid #363636;
+      border: 1px solid #363636;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        font-size: 1.8em;
+      }
     }
     p {
       text-align: center;

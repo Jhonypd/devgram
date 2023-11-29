@@ -2,7 +2,7 @@ import "./Auth.scss";
 
 //Components
 import { Link } from "react-router-dom";
-import Message from "../../components/Message";
+import Message from "../../components/Message/Message";
 
 //Hooks
 import { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import LetterName from "./LetterName";
+import LetterName from "../NameUser/LetterName";
 import "./ProfileDeleted.scss";
 
 const ProfileDeleted = () => {

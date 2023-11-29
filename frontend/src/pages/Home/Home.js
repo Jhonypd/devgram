@@ -1,10 +1,10 @@
 import "./Home.scss";
 
 //components
-import LikeContainer from "../../components/LikeContainer";
-import PhotoItem from "../../components/PhotoItem";
+import LikeContainer from "../../components/Like/LikeContainer";
+import PhotoItem from "../../components/Photo/PhotoItem";
 import { Link } from "react-router-dom";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 
 //hooks
 import { useEffect } from "react";

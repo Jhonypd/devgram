@@ -6,13 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 //components
 import { Link } from "react-router-dom";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 
 //redux
 import { searchPhotos } from "../../slices/photoSlice";
 import { useQuery } from "../../hooks/useQuery";
 import { Grid } from "react-loader-spinner";
-import PhotoItemSearch from "../../components/PhotoItemSearch";
+import PhotoItemSearch from "../../components/Photo/PhotoItemSearch";
 
 const Search = () => {
   const query = useQuery();

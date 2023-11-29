@@ -3,10 +3,13 @@ import "./Photo.scss";
 import { uploads } from "../../utils/config";
 
 //components
-import Message from "../../components/Message";
+import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
-import Loading from "../../components/Loading";
-import PhotoItem from "../../components/PhotoItem";
+import Loading from "../../components/Loading/Loading";
+import PhotoItem from "../../components/Photo/PhotoItem";
+import LikeContainer from "../../components/Like/LikeContainer";
+import ProfileContainer from "../../components/Profile/ProfileContainer";
+import LetterName from "../../components/NameUser/LetterName";
 
 //hooks
 import { useEffect, useState } from "react";
@@ -22,9 +25,6 @@ import {
   comment,
   discommented,
 } from "../../slices/photoSlice";
-import LikeContainer from "../../components/LikeContainer";
-import ProfileContainer from "../../components/ProfileContainer";
-import LetterName from "../../components/LetterName";
 
 const Photo = () => {
   const { id } = useParams();

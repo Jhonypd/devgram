@@ -3,20 +3,22 @@ import "./Profile.scss";
 import { uploads } from "../../utils/config";
 
 // components
-import Message from "../../components/Message";
+import Message from "../../components/Message/Message";
 import { Link, useParams } from "react-router-dom";
 import {
   BsFillEyeFill,
   BsFillPlusSquareFill,
+  BsGrid3X2GapFill,
   BsPencilFill,
   BsXLg,
 } from "react-icons/bs";
-import LetterName from "../../components/LetterName";
-import ProfileContainer from "../../components/ProfileContainer";
-import ProfileDeleted from "../../components/ProfileDeleted";
+import { Grid, TailSpin, ThreeDots } from "react-loader-spinner";
+import LetterName from "../../components/NameUser/LetterName";
+import ProfileContainer from "../../components/Profile/ProfileContainer";
+import ProfileDeleted from "../../components/Profile/ProfileDeleted";
 
 //pages
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 
 //hooks
 import { useEffect, useRef, useState } from "react";
@@ -32,7 +34,8 @@ import {
   updatePhoto,
   resetPhotos,
 } from "../../slices/photoSlice";
-import { Grid, TailSpin, ThreeDots } from "react-loader-spinner";
+import ProfileUnauthenticated from "../../components/Profile/ProfileUnauthenticated";
+import ProfileAuth from "../../components/Profile/ProfileAuth";
 
 const Profile = () => {
   const { id } = useParams();
@@ -184,53 +187,11 @@ const Profile = () => {
   return (
     <div id="profile">
       {id !== userAuth._id && (
-        <div className="profile-header">
-          {user ? (
-            <>
-              {user.profileImage && (
-                <ProfileContainer
-                  imageProfile={`${uploads}/users/${user.profileImage}`}
-                  userName={user.name}
-                  type={"profile-10"}
-                />
-              )}
-
-              {user.profileImage === "" && user.name && (
-                <LetterName userName={user.name} type={"profile-10"} />
-              )}
-
-              {user.name && (
-                <div className="profile-description">
-                  <h2>{user.name}</h2>
-                  <p>{user.bio}</p>
-                </div>
-              )}
-            </>
-          ) : (
-            <ProfileDeleted />
-          )}
-        </div>
+        <ProfileUnauthenticated user={user} uploads={uploads} />
       )}
 
-      {id === userAuth._id && (
-        <div className="profile-header">
-          {user.profileImage ? (
-            <ProfileContainer
-              imageProfile={`${uploads}/users/${user.profileImage}`}
-              userName={user.name}
-              type={"profile-10"}
-            />
-          ) : (
-            <>
-              <LetterName userName={user.name} type={"profile-10"} />
-            </>
-          )}
-          <div className="profile-description">
-            <h2>{user.name}</h2>
-            <p>{user.bio}</p>
-          </div>
-        </div>
-      )}
+      {id === userAuth._id && <ProfileAuth user={user} uploads={uploads} />}
+
       {id === userAuth._id && (
         <>
           <div className="new-post-btn" ref={btn}>
@@ -311,8 +272,9 @@ const Profile = () => {
       )}
 
       <div className="user-photos">
-        {/* <h2>Fotos publicadas:</h2> */}
-        <div className="user-photos-header"></div>
+        <div className="user-photos-header">
+          <BsGrid3X2GapFill />
+        </div>
         <div className="photos-container">
           {photos &&
             photos.map((photo) => (

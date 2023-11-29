@@ -1,10 +1,10 @@
 import "./PhotoItem.scss";
-import { uploads } from "../utils/config";
+import { uploads } from "../../utils/config";
 
 import { Link } from "react-router-dom";
 //import { useSelector } from "react-redux";
-import ProfileContainer from "./ProfileContainer";
-import LetterName from "./LetterName";
+import ProfileContainer from "../Profile/ProfileContainer";
+import LetterName from "../NameUser/LetterName";
 
 const PhotoItem = ({ photo }) => {
   return (

@@ -1,5 +1,5 @@
 import "./PhotoItem.scss";
-import { uploads } from "../utils/config";
+import { uploads } from "../../utils/config";
 
 const PhotoItemSearch = ({ photo }) => {
   return (
