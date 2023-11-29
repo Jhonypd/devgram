@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <div id="login">
-      <h2>DevGram</h2>
+      <h2>CodeSnap</h2>
       <p className="subtitle">Faça login para ver o que há de novo.</p>
       <form onSubmit={handleSubmit}>
         <input
